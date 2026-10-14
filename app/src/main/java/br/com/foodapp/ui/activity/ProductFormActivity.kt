@@ -1,4 +1,4 @@
-package br.com.foodapp
+package br.com.foodapp.ui.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,34 +9,37 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.foodapp.ui.screens.HomeScreen
+import br.com.foodapp.ui.screens.ProductFormScreen
 import br.com.foodapp.ui.theme.FoodAppTheme
 
-class MainActivity : ComponentActivity() {
+class ProductFormActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            FoodAppTheme {
-                App()
+            FoodAppTheme() {
+                ProductForm()
             }
         }
     }
 }
 
 @Composable
-fun App() {
-    Scaffold { paddingValues ->
-        HomeScreen(
-            Modifier.padding(paddingValues)
+fun ProductForm(
+    modifier: Modifier = Modifier
+) {
+    Scaffold() { innerPadding ->
+        ProductFormScreen(
+            modifier = Modifier
+                .padding(innerPadding)
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun AppPreview() {
-    FoodAppTheme {
-        App()
+private fun ProductFormPreview() {
+    FoodAppTheme() {
+        ProductForm()
     }
 }
