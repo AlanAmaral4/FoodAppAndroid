@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -24,12 +26,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.foodapp.model.Product
 import br.com.foodapp.ui.component.FormTextField
 import br.com.foodapp.ui.theme.FoodAppTheme
+import coil3.compose.AsyncImage
+import java.math.BigDecimal
 
 @Composable
 fun ProductFormScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSave: (Product) -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -47,6 +53,16 @@ fun ProductFormScreen(
         )
 
         var url by remember { mutableStateOf("") }
+
+        if (url.isNotBlank()) {
+            AsyncImage(
+                model = url,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+            )
+        }
 
         FormTextField(
             text = url,
@@ -101,7 +117,13 @@ fun ProductFormScreen(
 
         Button(
             onClick = {
-
+                val newProduct = Product(
+                    image = url,
+                    name = name,
+                    price = BigDecimal(price),
+                    description = description
+                )
+                onSave(newProduct)
             },
             modifier = Modifier
                 .fillMaxWidth(),
